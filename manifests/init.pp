@@ -23,7 +23,7 @@ class openmrs197 (
         user      => $tomcat_user,
         user_home => $tomcat_user_home,
         http_port => $tomcat_http_port,
-    }
+    }->
 
     class { 'openmrs197::install':
         user                    => $tomcat_user,
@@ -33,6 +33,5 @@ class openmrs197 (
         db_name                 => $db_name,
         db_owner                => $db_owner,
         db_owner_password       => $db_owner_password,
-        require                 => Class['tomcat6'],
     }
 }
