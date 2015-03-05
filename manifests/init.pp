@@ -3,6 +3,7 @@ class openmrs197 (
     $tomcat_user = 'tomcat6',
     $tomcat_user_home = '/opt/tomcat6',
     $tomcat_http_port = '8080',
+    $tomcat_java_opts = undef,
     $db_type = 'mysql',
     $db_name = 'openmrs',
     $db_owner = 'openmrs',
@@ -20,9 +21,16 @@ class openmrs197 (
     }->
 
     class { 'tomcat6':
-        user      => $tomcat_user,
-        user_home => $tomcat_user_home,
-        http_port => $tomcat_http_port,
+        user         => $tomcat_user,
+        user_home    => $tomcat_user_home,
+        http_port    => $tomcat_http_port,
+        tomcat_users => [
+                            {   name     => "admin",
+                                password => "admin",
+                                roles    => 'tomcat,admin,manager,manager-gui'
+                            },
+                        ],
+        java_opts   => $tomcat_java_opts,
     }->
 
     class { 'openmrs197::install':
