@@ -1,0 +1,28 @@
+{
+  "name": "teleivo-openmrs197",
+  "version": "0.1.0",
+  "author": "teleivo",
+  "summary": "Installs, configures, and manages openmrs version 1.9.7.",
+  "license": "Apache-2.0",
+  "source": "git://github.com/teleivo/puppet-openmrs197.git",
+  "project_page": "https://github.com/teleivo/puppet-openmrs197",
+  "operatingsystem_support": [
+    {
+      "operatingsystem": "Ubuntu",
+      "operatingsystemrelease": [
+        "14.04"
+      ]
+    }
+  ],
+  "requirements": [
+    {
+      "name": "puppet",
+      "version_requirement": "3.x"
+    }
+  ],
+  "description": "Module for openmrs 197 configuration",
+  "dependencies": [
+    {"name":"puppetlabs/mysql","version_requirement":">= 3.1.0"},
+    {"name":"puppetlabs/postgresql","version_requirement":">= 4.1.0"}
+  ]
+}
