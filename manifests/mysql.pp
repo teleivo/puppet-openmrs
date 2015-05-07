@@ -8,10 +8,10 @@ class openmrs197::mysql (
 
     include '::mysql::server'
 
-    mysql::db { "${db_name}":
-        user     => "${db_owner}",
-        password => "${db_owner_password}",
-        host     => "${db_host}",
+    mysql::db { $db_name:
+        user     => $db_owner,
+        password => $db_owner_password,
+        host     => $db_host,
         grant    => ['ALL'],
     }
 }
