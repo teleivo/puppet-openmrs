@@ -2,7 +2,6 @@ class openmrs197::install (
     $user,
     $user_home,
     $module_deployment_path,
-    $db_type,
     $db_name,
     $db_owner,
     $db_owner_password,
