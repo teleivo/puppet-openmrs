@@ -1,4 +1,5 @@
 class openmrs (
+    $version = '1.9.7',
     $tomcat_user = 'tomcat6',
     $tomcat_user_home = '/opt/tomcat6',
     $tomcat_module_deployment_path = '/opt/tomcat6/apache-tomcat-6.0.29/webapps',
@@ -17,6 +18,7 @@ class openmrs (
     }
 
     class { 'openmrs::staging':
+        openmrs_version         => $version,
         user                    => $tomcat_user,
         user_home               => $tomcat_user_home,
         module_deployment_path  => $tomcat_module_deployment_path,

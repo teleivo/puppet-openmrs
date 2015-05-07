@@ -1,9 +1,9 @@
 class openmrs::staging (
+    $openmrs_version,
     $user,
     $user_home,
     $module_deployment_path,
 ) {
-    $openmrs_version = '1.9.7'
     $openmrs_archive_name = 'openmrs.war'
 
     $openmrs_base_url = 'http://sourceforge.net/projects/openmrs/files/releases/'
