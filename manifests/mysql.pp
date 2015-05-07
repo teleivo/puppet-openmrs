@@ -1,4 +1,4 @@
-class openmrs197::mysql::create_db (
+class openmrs197::mysql (
     $db_name,
     $db_owner,
     $db_owner_password,

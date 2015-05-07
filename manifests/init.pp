@@ -32,12 +32,15 @@ class openmrs197 (
         java_opts   => $tomcat_java_opts,
     }->
 
-    class { 'openmrs197::install':
+    class { 'openmrs197::staging':
         user                    => $tomcat_user,
         user_home               => $tomcat_user_home,
         module_deployment_path  => $tomcat_module_deployment_path,
-        db_name                 => $db_name,
-        db_owner                => $db_owner,
-        db_owner_password       => $db_owner_password,
+    }
+
+    class { 'openmrs197::mysql':
+        db_name             => $db_name,
+        db_owner            => $db_owner,
+        db_owner_password   => $db_owner_password,
     }
 }
