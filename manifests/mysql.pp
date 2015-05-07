@@ -1,4 +1,4 @@
-class openmrs197::mysql (
+class openmrs::mysql (
     $db_name,
     $db_owner,
     $db_owner_password,

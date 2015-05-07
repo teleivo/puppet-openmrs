@@ -1,4 +1,4 @@
-class openmrs197::staging (
+class openmrs::staging (
     $user,
     $user_home,
     $module_deployment_path,
