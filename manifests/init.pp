@@ -3,6 +3,7 @@ class openmrs (
     $tomcat_user = 'tomcat6',
     $tomcat_user_home = '/opt/tomcat6',
     $tomcat_module_deployment_path = '/opt/tomcat6/apache-tomcat-6.0.29/webapps',
+    $db_host = 'localhost',
     $db_name = 'openmrs',
     $db_owner = 'openmrs',
     $db_owner_password = 'openmrs',
@@ -18,15 +19,12 @@ class openmrs (
     }
 
     class { 'openmrs::staging':
-        openmrs_version         => $version,
-        user                    => $tomcat_user,
-        user_home               => $tomcat_user_home,
-        module_deployment_path  => $tomcat_module_deployment_path,
     }
 
-    class { 'openmrs::mysql':
-        db_name             => $db_name,
-        db_owner            => $db_owner,
-        db_owner_password   => $db_owner_password,
+    mysql::db { $openmrs::db_name:
+        user     => $openmrs::db_owner,
+        password => $openmrs::db_owner_password,
+        host     => $openmrs::db_host,
+        grant    => ['ALL'],
     }
 }
