@@ -14,15 +14,16 @@ class openmrs::staging (
     $openmrs_staging_dir = "${user_home}/openmrs_${openmrs_version_dir_suffix}/"
     $openmrs_staging_path = "${openmrs_staging_dir}${openmrs_archive_name}"
 
-    class { '::staging':
-        path  => $openmrs_staging_dir,
-        owner => $user,
-        group => $user,
+    file { $openmrs_staging_dir:
+        ensure => directory,
+        owner  => $user,
+        group  => $user,
     }
 
     staging::file { $openmrs_archive_name:
-        source => $openmrs_source_url,
-        target => $openmrs_staging_path,
+        source  => $openmrs_source_url,
+        target  => $openmrs_staging_path,
+        require => File["${openmrs_staging_dir}"],
     }
 
     file { "${module_deployment_path}/${openmrs_archive_name}":
