@@ -10,12 +10,12 @@ class openmrs (
 ) {
     include tomcat6
 
-    package { "openjdk-7-jdk":
-        ensure => "present",
+    package { 'openjdk-7-jdk':
+        ensure => present,
     }
 
-    package { "libaio1":
-        ensure => "present",
+    package { 'libaio1':
+        ensure => present,
     }
 
     class { 'openmrs::staging':
