@@ -22,6 +22,7 @@ describe 'openmrs', :type => :class do
             .with_content(/connection.password=openmrs/)
             .with_content(/auto_update_database=false/)
             .with_content(/module.allow_web_admin=true/)
+            .with_content(/application_data_directory=\/opt\/openmrs/)
       }
       it {
         is_expected.to contain_file('/opt/openmrs').with(
@@ -55,19 +56,29 @@ describe 'openmrs', :type => :class do
             .with_content(/connection.password=admin123/)
             .with_content(/auto_update_database=false/)
             .with_content(/module.allow_web_admin=true/)
+            .with_content(/application_data_directory=\/opt\/openmrs/)
       }
       it { is_expected.to contain_mysql_database($db_name) }
       it { is_expected.to contain_mysql_user($db_owner + "@" + $db_host) }
     end
 
     context 'with custom openmrs application directory' do
-      $openmrs_application_data_directory = '/var/lib/.OpenMRS'
+      $openmrs_application_data_directory = '/var/lib/openmrs'
       let(:params) { {
         :tomcat_catalina_base => '/var/lib/tomcat7',
         :tomcat_user => 'tomcat7',
         :openmrs_application_data_directory => $openmrs_application_data_directory,
       } }
 
+      it { is_expected.to contain_file('/var/lib/tomcat7/openmrs-runtime.properties')
+            .with(
+              'ensure' => 'present',
+              'owner'  => 'tomcat7',
+              'group'  => 'tomcat7',
+              'mode'   => '0644',
+            )
+            .with_content(/application_data_directory=\/var\/lib\/openmrs/)
+      }
       it {
         is_expected.to contain_file($openmrs_application_data_directory).with(
           'ensure' => 'directory',

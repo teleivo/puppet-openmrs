@@ -14,10 +14,11 @@ class openmrs (
   $openmrs_runtime_properties = {
     'connection.url'         =>
     "jdbc:mysql://${openmrs::db_host}:3306/${openmrs::db_name}?autoReconnect=true&sessionVariables=storage_engine=InnoDB&useUnicode=true&characterEncoding=UTF-8",
-    'connection.username'    => $openmrs::db_owner,
-    'connection.password'    => $openmrs::db_owner_password,
-    'auto_update_database'   => false,
-    'module.allow_web_admin' => true,
+    'connection.username'        => $openmrs::db_owner,
+    'connection.password'        => $openmrs::db_owner_password,
+    'auto_update_database'       => false,
+    'module.allow_web_admin'     => true,
+    'application_data_directory' => $openmrs::openmrs_application_data_directory,
   }
 
   include 'tomcat'
