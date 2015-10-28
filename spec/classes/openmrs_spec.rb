@@ -9,6 +9,7 @@ describe 'openmrs', :type => :class do
         :tomcat_user => 'tomcat7',
       } }
       it { is_expected.to compile }
+      it { is_expected.to contain_class('openmrs') }
       it { is_expected.to contain_class('tomcat') }
       it { is_expected.to contain_file('/var/lib/tomcat7/openmrs-runtime.properties')
             .with(
