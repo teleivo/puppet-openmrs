@@ -32,6 +32,9 @@ describe 'openmrs', :type => :class do
           'mode'   => '0755'
         )
       }
+      it { is_expected.to contain_tomcat__war('openmrs.war').with(
+        'war_source' => 'http://sourceforge.net/projects/openmrs/files/releases/OpenMRS_Platform_1.11.4/openmrs.war',
+      ) }
       it { is_expected.to contain_mysql_database('openmrs') }
       it { is_expected.to contain_mysql_user('openmrs@localhost') }
     end
