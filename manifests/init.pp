@@ -7,7 +7,7 @@ class openmrs (
   $db_owner = 'openmrs',
   $db_owner_password = 'openmrs',
 ) {
-  include 'tomcat'
+  include '::tomcat'
 
   file { $openmrs_application_data_directory:
     ensure => 'directory',
