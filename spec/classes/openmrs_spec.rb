@@ -2,12 +2,13 @@ require 'spec_helper'
 
 describe 'openmrs', :type => :class do
   context 'on Ubuntu 14.04 64bit' do
+    $tomcat_catalina_base = '/var/lib/tomcat7'
     $tomcat_user = 'tomcat7'
     $openmrs_application_data_directory = '/usr/share/tomcat7/.OpenMRS'
 
     context 'with default parameters' do
       let(:params) { {
-        :tomcat_catalina_base => '/var/lib/tomcat7',
+        :tomcat_catalina_base => $tomcat_catalina_base,
         :tomcat_user => $tomcat_user,
         :openmrs_application_data_directory => $openmrs_application_data_directory,
       } }
@@ -22,7 +23,8 @@ describe 'openmrs', :type => :class do
           'mode'   => '0755'
       ) }
       it { is_expected.to contain_tomcat__war('openmrs.war').with(
-        'war_source' => 'http://sourceforge.net/projects/openmrs/files/releases/OpenMRS_Platform_1.11.4/openmrs.war',
+        'catalina_base' => $tomcat_catalina_base,
+        'war_source'    => 'http://sourceforge.net/projects/openmrs/files/releases/OpenMRS_Platform_1.11.4/openmrs.war',
       ) }
       it { is_expected.to contain_mysql_database('openmrs') }
       it { is_expected.to contain_mysql_user('openmrs@localhost') }
@@ -34,8 +36,8 @@ describe 'openmrs', :type => :class do
       $db_owner = 'medicaladmin'
       $db_owner_password = 'admin123'
       let(:params) { {
-        :tomcat_catalina_base => '/var/lib/tomcat7',
-        :tomcat_user => 'tomcat7',
+        :tomcat_catalina_base => $tomcat_catalina_base,
+        :tomcat_user => $tomcat_user,
         :openmrs_application_data_directory => $openmrs_application_data_directory,
         :db_host => $db_host,
         :db_name => $db_name,
