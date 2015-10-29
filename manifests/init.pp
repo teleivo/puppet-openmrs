@@ -1,7 +1,7 @@
 class openmrs (
   $tomcat_catalina_base,
   $tomcat_user,
-  $openmrs_application_data_directory = '/opt/openmrs',
+  $openmrs_application_data_directory,
   $db_host = 'localhost',
   $db_name = 'openmrs',
   $db_owner = 'openmrs',

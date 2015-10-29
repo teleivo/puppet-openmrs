@@ -2,19 +2,23 @@ require 'spec_helper'
 
 describe 'openmrs', :type => :class do
   context 'on Ubuntu 14.04 64bit' do
+    $tomcat_user = 'tomcat7'
+    $openmrs_application_data_directory = '/usr/share/tomcat7/.OpenMRS'
 
     context 'with default parameters' do
       let(:params) { {
         :tomcat_catalina_base => '/var/lib/tomcat7',
-        :tomcat_user => 'tomcat7',
+        :tomcat_user => $tomcat_user,
+        :openmrs_application_data_directory => $openmrs_application_data_directory,
       } }
+
       it { is_expected.to compile }
       it { is_expected.to contain_class('openmrs') }
       it { is_expected.to contain_class('tomcat') }
-      it { is_expected.to contain_file('/opt/openmrs').with(
+      it { is_expected.to contain_file($openmrs_application_data_directory).with(
           'ensure' => 'directory',
-          'owner'  => 'tomcat7',
-          'group'  => 'tomcat7',
+          'owner'  => $tomcat_user,
+          'group'  => $tomcat_user,
           'mode'   => '0755'
       ) }
       it { is_expected.to contain_tomcat__war('openmrs.war').with(
@@ -32,6 +36,7 @@ describe 'openmrs', :type => :class do
       let(:params) { {
         :tomcat_catalina_base => '/var/lib/tomcat7',
         :tomcat_user => 'tomcat7',
+        :openmrs_application_data_directory => $openmrs_application_data_directory,
         :db_host => $db_host,
         :db_name => $db_name,
         :db_owner => $db_owner,
@@ -40,22 +45,6 @@ describe 'openmrs', :type => :class do
 
       it { is_expected.to contain_mysql_database($db_name) }
       it { is_expected.to contain_mysql_user($db_owner + "@" + $db_host) }
-    end
-
-    context 'with custom openmrs application directory' do
-      $openmrs_application_data_directory = '/var/lib/openmrs'
-      let(:params) { {
-        :tomcat_catalina_base => '/var/lib/tomcat7',
-        :tomcat_user => 'tomcat7',
-        :openmrs_application_data_directory => $openmrs_application_data_directory,
-      } }
-
-      it { is_expected.to contain_file($openmrs_application_data_directory).with(
-          'ensure' => 'directory',
-          'owner'  => 'tomcat7',
-          'group'  => 'tomcat7',
-          'mode'   => '0755'
-      ) }
     end
   end
 end
