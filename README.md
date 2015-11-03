@@ -1,83 +1,114 @@
-#puppet-openmrs
+# puppet-openmrs
 
 [![Build Status](https://secure.travis-ci.org/teleivo/puppet-openmrs.png?branch=master)](https://travis-ci.org/teleivo/puppet-openmrs)
 
-####Table of Contents
+#### Table of Contents
 
-1. [Overview](#overview)
-2. [Module Description - What the module does and why it is useful](#module-description)
-3. [Setup - The basics of getting started with openmrs](#setup)
-    * [Setup requirements](#setup-requirements)
+1. [Module Description - What the module does and why it is useful](#module-description)
+2. [Setup - The basics of getting started with openmrs](#setup)
     * [Beginning with openmrs](#beginning-with-openmrs)
+3. [Reference - An under-the-hood peek at what the module is doing and how](#reference)
+    * [Classes](#classes)
+    * [Parameters](#parameters)
 4. [Limitations - OS compatibility, etc.](#limitations)
 5. [Development](#development)
 
-##Overview
+## Module Description
 
-The openmrs module lets you use Puppet to deploy & configure openmrs on tomcat
+The OpenMRS module deploys and configures OpenMRS on [Tomcat](http://tomcat.apache.org/).  
+[OpenMRS](http://www.openmrs.org) is an open source enterprise electronic medical record system.  
 
-##Module Description
+## Setup
 
-OpenMRS is an open source enterprise electronic medical record system [OpenMRS](http://www.openmrs.org)
-This module helps you in getting openmrs up and running using Puppet.
+### Beginning with OpenMRS
 
-##Setup
-
-###Setup requirements
-
-The openmrs module requires
-[puppetlabs-mysql](https://forge.puppetlabs.com/puppetlabs/mysql) version 3.1.0 or newer.
-[puppetlabs-tomcat](https://forge.puppetlabs.com/puppetlabs/tomcat) version 1.3.2 or newer.
-To install the modules do:
-
-~~~
-puppet module install puppetlabs-mysql
-puppet module install puppetlabs-tomcat
-~~~
-
-**This module expects you to have java already installed.**
-**This module expects that you have the packages needed by the 3rd party module (such as for ex. unzip, curl) already installed.**
-
-###Beginning with openmrs
-
-The simplest way to get openmrs up and running is to
-install mysql server and tomcat on the same node as follows:
+The quickest way to get OpenMRS up and running is to
+install MySQL server and Tomcat on the same node, as done with the following on
+an Ubuntu machine:
 
 ```puppet
-include 'mysql::server'
+include '::mysql::server'
 
-class { 'tomcat':
+class { '::tomcat':
   manage_user         => true,
   user                => 'tomcat7',
   install_from_source => false,
 }->
-tomcat::instance { 'tomcat7':
+::tomcat::instance { 'tomcat7':
   package_name  => 'tomcat7',
 }->
-tomcat::service { 'tomcat7':
+::tomcat::service { 'tomcat7':
   use_init       => true,
   service_name   => 'tomcat7',
   service_ensure => running,
 }->
-class{ 'openmrs':
-  tomcat_catalina_base => '/var/lib/tomcat7',
-  tomcat_user          => 'tomcat7',
+class{ '::openmrs':
+  tomcat_catalina_base               => '/var/lib/tomcat7',
+  tomcat_user                        => 'tomcat7',
+  openmrs_application_data_directory => '/var/lib/OpenMRS/',
 }
 ```
 
-You can of course install mysql and tomcat on different nodes.
+## Reference
 
-##Limitations
+### Classes
 
-This module was only tested with openmrs version 1.11.4
-This module is currently limited to Ubuntu 14.04 64bit.
-This module is currently limited to openmrs using mysql.
+#### Public classes
 
-##Development
+* [`openmrs`](#openmrs): Installs and configures OpenMRS.
+
+#### Private classes
+
+### Parameters
+
+All parameters are optional except where otherwise noted.
+
+#### openmrs
+
+##### `tomcat_catalina_base`
+
+*Required.* Specifies the base directory of the Tomcat installation where openmrs.war is
+deployed.
+
+##### `tomcat_user`
+
+*Required.* Specifies the user running Tomcat.
+
+##### `openmrs_application_data_directory`
+
+*Required.* Specifies the [application data directory](https://wiki.openmrs.org/display/docs/Application+Data+Directory) used used by OpenMRS for external storage. Directory owner and group are set to $tomcat_user.
+
+##### `db_host`
+
+The host of the MySQL server.
+Defaults to 'localhost'.
+
+##### `db_name`
+
+The MySQL database to create.
+Defaults to 'openmrs'.
+
+##### `db_owner`
+
+The MySQL user for the database $db_name.
+Defaults to 'openmrs'.
+
+##### `db_owner_password`
+
+The MySQL user password for $db_owner.
+Defaults to 'openmrs'.
+
+## Limitations
+
+This module only deploys OpenMRS version 1.11.4.  
+This module is currently limited to Ubuntu 14.04 64bit.  
+This module is currently limited to OpenMRS using MySQL.  
+
+## Development
 
 Please feel free to open pull requests!
 
-###Running tests
+### Running tests
 This project contains tests for [rspec-puppet](http://rspec-puppet.com/) to
 verify functionality.
 
@@ -87,11 +118,7 @@ sudo gem install bundler
 bundle install
 ```
 
-To run the tests once:
-```bash
-bundle exec rake spec
-```
-or if you also want lint, syntax checks
+To run tests, lint and syntax checks once:
 ```bash
 bundle exec rake test
 ```

@@ -1,3 +1,4 @@
+# Class: openmrs: See README.md for documentation.
 class openmrs (
   $tomcat_catalina_base,
   $tomcat_user,
