@@ -8,6 +8,14 @@ class openmrs (
   $db_owner = 'openmrs',
   $db_owner_password = 'openmrs',
 ) {
+  validate_absolute_path($tomcat_catalina_base)
+  validate_string($tomcat_user)
+  validate_absolute_path($openmrs_application_data_directory)
+  validate_string($db_host)
+  validate_string($db_name)
+  validate_string($db_owner)
+  validate_string($db_owner_password)
+
   include '::tomcat'
 
   file { $openmrs_application_data_directory:

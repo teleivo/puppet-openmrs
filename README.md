@@ -69,33 +69,40 @@ All parameters are optional except where otherwise noted.
 
 *Required.* Specifies the base directory of the Tomcat installation where openmrs.war is
 deployed.
+Valid options: string containing an absolute path.
 
 ##### `tomcat_user`
 
 *Required.* Specifies the user running Tomcat.
+Valid options: string.
 
 ##### `openmrs_application_data_directory`
 
 *Required.* Specifies the [application data directory](https://wiki.openmrs.org/display/docs/Application+Data+Directory) used used by OpenMRS for external storage. Directory owner and group are set to $tomcat_user.
+Valid options: string containing an absolute path.
 
 ##### `db_host`
 
 The host of the MySQL server.
+Valid options: string.
 Defaults to 'localhost'.
 
 ##### `db_name`
 
 The MySQL database to create.
+Valid options: string.
 Defaults to 'openmrs'.
 
 ##### `db_owner`
 
 The MySQL user for the database $db_name.
+Valid options: string.
 Defaults to 'openmrs'.
 
 ##### `db_owner_password`
 
 The MySQL user password for $db_owner.
+Valid options: string.
 Defaults to 'openmrs'.
 
 ## Limitations
