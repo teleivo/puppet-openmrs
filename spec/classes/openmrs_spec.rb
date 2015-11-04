@@ -61,7 +61,7 @@ describe 'openmrs', :type => :class do
       describe 'given non string tomcat_user' do
         let(:params) {{
           :tomcat_catalina_base => $tomcat_catalina_base,
-          :tomcat_user => 1232,
+          :tomcat_user => true,
           :openmrs_application_data_directory => $openmrs_application_data_directory,
         }}
         it { should_not compile }
@@ -79,7 +79,7 @@ describe 'openmrs', :type => :class do
           :tomcat_catalina_base => $tomcat_catalina_base,
           :tomcat_user => $tomcat_user,
           :openmrs_application_data_directory => $openmrs_application_data_directory,
-          :db_host => 1242,
+          :db_host => true,
         }}
         it { should_not compile }
       end
@@ -88,7 +88,7 @@ describe 'openmrs', :type => :class do
           :tomcat_catalina_base => $tomcat_catalina_base,
           :tomcat_user => $tomcat_user,
           :openmrs_application_data_directory => $openmrs_application_data_directory,
-          :db_name => 1242,
+          :db_name => true,
         }}
         it { should_not compile }
       end
@@ -97,7 +97,7 @@ describe 'openmrs', :type => :class do
           :tomcat_catalina_base => $tomcat_catalina_base,
           :tomcat_user => $tomcat_user,
           :openmrs_application_data_directory => $openmrs_application_data_directory,
-          :db_owner => 1242,
+          :db_owner => true,
         }}
         it { should_not compile }
       end
@@ -106,7 +106,7 @@ describe 'openmrs', :type => :class do
           :tomcat_catalina_base => $tomcat_catalina_base,
           :tomcat_user => $tomcat_user,
           :openmrs_application_data_directory => $openmrs_application_data_directory,
-          :db_owner_password => 1242,
+          :db_owner_password => true,
         }}
         it { should_not compile }
       end
