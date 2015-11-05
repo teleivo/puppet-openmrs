@@ -5,6 +5,7 @@ describe 'openmrs', :type => :class do
     $tomcat_catalina_base = '/var/lib/tomcat7'
     $tomcat_user = 'tomcat7'
     $openmrs_application_data_directory = '/usr/share/tomcat7/.OpenMRS'
+    $default_db_name = 'openmrs'
 
     context 'with default parameters' do
       let(:params) { {
@@ -22,11 +23,14 @@ describe 'openmrs', :type => :class do
           'group'  => $tomcat_user,
           'mode'   => '0755'
       ) }
-      it { is_expected.to contain_tomcat__war('openmrs.war').with(
-        'catalina_base' => $tomcat_catalina_base,
-        'war_source'    => 'http://sourceforge.net/projects/openmrs/files/releases/OpenMRS_Platform_1.11.4/openmrs.war',
-      ) }
-      it { is_expected.to contain_mysql_database('openmrs') }
+      it { is_expected.to contain_tomcat__war('openmrs.war')
+        .with(
+          'catalina_base' => $tomcat_catalina_base,
+          'war_source'    => 'http://sourceforge.net/projects/openmrs/files/releases/OpenMRS_Platform_1.11.4/openmrs.war',)
+        .that_requires("File[" + $openmrs_application_data_directory + "]")
+        .that_requires("Mysql::Db[" + $default_db_name + "]")
+      }
+      it { is_expected.to contain_mysql_database($default_db_name) }
       it { is_expected.to contain_mysql_user('openmrs@localhost') }
     end
 
