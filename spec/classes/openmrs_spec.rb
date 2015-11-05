@@ -6,6 +6,8 @@ describe 'openmrs', :type => :class do
     $tomcat_user = 'tomcat7'
     $openmrs_application_data_directory = '/usr/share/tomcat7/.OpenMRS'
     $default_db_name = 'openmrs'
+    $default_db_user = 'openmrs'
+    $default_db_host = 'localhost'
 
     context 'with default parameters' do
       let(:params) { {
@@ -31,7 +33,8 @@ describe 'openmrs', :type => :class do
         .that_requires("Mysql::Db[" + $default_db_name + "]")
       }
       it { is_expected.to contain_mysql_database($default_db_name) }
-      it { is_expected.to contain_mysql_user('openmrs@localhost') }
+      it { is_expected.to contain_mysql_user($default_db_user + "@" + $default_db_host) }
+      it { is_expected.to contain_mysql_grant($default_db_user + "@" + $default_db_host + "/" + $default_db_name) }
     end
 
     context 'with custom db parameters' do
