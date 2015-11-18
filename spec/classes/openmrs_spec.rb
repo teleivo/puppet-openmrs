@@ -1,17 +1,17 @@
 require 'spec_helper'
 
 describe 'openmrs', :type => :class do
-    $tomcat_catalina_base = '/var/lib/tomcat7'
-    $tomcat_user = 'tomcat7'
-    $openmrs_application_data_directory = '/usr/share/tomcat7/.OpenMRS'
-    $default_db_name = 'openmrs'
-    let :valid_required_params do
-      {
-        :tomcat_catalina_base => $tomcat_catalina_base,
-        :tomcat_user => $tomcat_user,
-        :openmrs_application_data_directory => $openmrs_application_data_directory,
-      }
-    end
+  $tomcat_catalina_base = '/var/lib/tomcat7'
+  $tomcat_user = 'tomcat7'
+  $openmrs_application_data_directory = '/usr/share/tomcat7/.OpenMRS'
+  $default_db_name = 'openmrs'
+  let :valid_required_params do
+    {
+      :tomcat_catalina_base => $tomcat_catalina_base,
+      :tomcat_user => $tomcat_user,
+      :openmrs_application_data_directory => $openmrs_application_data_directory,
+    }
+  end
 
   context 'on Ubuntu 14.04 64bit' do
 
